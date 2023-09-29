@@ -24,7 +24,7 @@ public class CreateUserKeyPairUseCase implements CreateRegistryUseCase<KeyPairDT
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    @Value("${app.config.keypair.algorithmType:DSA}")
+    @Value("${app.config.keypair.algorithmType}")
     private String algorithmType;
 
     @Value("${app.config.keypair.keySize:2048}")

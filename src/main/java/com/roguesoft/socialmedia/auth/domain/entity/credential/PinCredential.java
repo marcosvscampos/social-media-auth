@@ -1,5 +1,6 @@
 package com.roguesoft.socialmedia.auth.domain.entity.credential;
 
+import com.roguesoft.socialmedia.auth.domain.entity.KeyPair;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,8 +16,9 @@ public class PinCredential extends Credential {
     }
 
     @Override
-    public void setSecretValue(String value) {
+    public void setSecretValue(final KeyPair keyPair, String value) {
         this.pinNumber = value;
+        //this.pinNumber = keyPair.encrypt("RSA", value);
     }
 
     @Override

@@ -16,7 +16,6 @@ public class CredentialDomainMapper extends DomainMapper<CredentialDTO, Credenti
     @Override
     public Credential toEntity(CredentialDTO request) {
         Credential credential = request.getType().getCredential();
-        credential.setSecretValue(request.getSecretValue());
         credential.setUsername(request.getUsername());
         credential.setUserId(request.getUserId());
         credential.setType();

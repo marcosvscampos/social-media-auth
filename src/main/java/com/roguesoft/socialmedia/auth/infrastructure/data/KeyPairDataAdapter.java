@@ -29,4 +29,11 @@ public class KeyPairDataAdapter implements DatabasePort<KeyPair> {
     public KeyPair findById(String id) {
         return null;
     }
+
+    @Override
+    public KeyPair findByUserId(String userId) {
+        KeyPairModel model = repository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("No KeyPair found for USER: " + userId));
+        return dataMapper.toEntity(model);
+    }
 }

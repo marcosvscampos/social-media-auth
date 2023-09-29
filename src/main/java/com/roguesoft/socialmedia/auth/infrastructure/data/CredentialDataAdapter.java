@@ -29,4 +29,9 @@ public class CredentialDataAdapter implements DatabasePort<Credential> {
     public Credential findById(String id) {
         return null;
     }
+
+    @Override
+    public Credential findByUserId(String userId) {
+        return null;
+    }
 }

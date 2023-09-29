@@ -1,5 +1,6 @@
 package com.roguesoft.socialmedia.auth.domain.entity.credential;
 
+import com.roguesoft.socialmedia.auth.domain.entity.KeyPair;
 import com.roguesoft.socialmedia.auth.infrastructure.crypto.HashCreator;
 import com.roguesoft.socialmedia.auth.infrastructure.crypto.MD5HashCreator;
 import lombok.Data;
@@ -24,7 +25,7 @@ public abstract class Credential {
         return this.id;
     }
 
-    public abstract void setSecretValue(final String value);
+    public abstract void setSecretValue(final KeyPair keyPair, final String value);
 
     public abstract String getSecretValue();
 

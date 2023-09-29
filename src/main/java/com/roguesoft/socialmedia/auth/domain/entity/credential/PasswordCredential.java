@@ -1,5 +1,6 @@
 package com.roguesoft.socialmedia.auth.domain.entity.credential;
 
+import com.roguesoft.socialmedia.auth.domain.entity.KeyPair;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,8 +16,9 @@ public class PasswordCredential extends Credential {
     }
 
     @Override
-    public void setSecretValue(final String value) {
+    public void setSecretValue(final KeyPair keyPair, final String value) {
         this.password = value;
+        //this.password = keyPair.encrypt("RSA", value);
     }
 
     @Override

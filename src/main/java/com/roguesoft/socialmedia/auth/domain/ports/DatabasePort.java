@@ -6,4 +6,6 @@ public interface DatabasePort<T> {
 
     T findById(String id);
 
+    T findByUserId(String userId);
+
 }

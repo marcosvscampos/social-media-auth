@@ -7,6 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -24,9 +28,9 @@ public class KeyPair {
 
     private String userId;
 
-    private String publicKey;
+    private PublicKey publicKey;
 
-    private String privateKey;
+    private PrivateKey privateKey;
 
     public String getId(){
         if(Objects.isNull(this.id)){
@@ -41,14 +45,28 @@ public class KeyPair {
             keyPairGenerator.initialize(keySize);
 
             java.security.KeyPair pair = keyPairGenerator.generateKeyPair();
-            PrivateKey privKey = pair.getPrivate();
-            PublicKey pubKey = pair.getPublic();
 
-            this.privateKey = Base64.getEncoder().encodeToString(privKey.getEncoded());
-            this.publicKey = Base64.getEncoder().encodeToString(pubKey.getEncoded());
+            this.privateKey = pair.getPrivate();
+            this.publicKey = pair.getPublic();
+
             this.userId = userId;
         } catch(NoSuchAlgorithmException e){
             throw new RuntimeException("No algorithm for type: " + algorithm);
+        }
+    }
+
+    public String encrypt(final String algorithm, final String value) {
+        try {
+            Cipher cipher = Cipher.getInstance(algorithm);
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
+            byte[] plainTextBytes = value.getBytes();
+
+            byte[] encryptedBytes = cipher.doFinal(plainTextBytes);
+
+            return Base64.getEncoder().encodeToString(encryptedBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error during value encryption: ", e);
         }
     }
 
