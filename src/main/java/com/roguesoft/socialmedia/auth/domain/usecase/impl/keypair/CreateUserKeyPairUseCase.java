@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateKeyPairForUserUseCase implements CreateRegistryUseCase<KeyPairDTO, ResponseDTO> {
+public class CreateUserKeyPairUseCase implements CreateRegistryUseCase<KeyPairDTO, ResponseDTO> {
 
     private final DatabasePort<KeyPair> keyPairDatabasePort;
     private final HttpClientPort<User> userClientPort;

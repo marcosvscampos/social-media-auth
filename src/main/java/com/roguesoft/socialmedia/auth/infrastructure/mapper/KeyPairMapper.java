@@ -3,9 +3,11 @@ package com.roguesoft.socialmedia.auth.infrastructure.mapper;
 import com.roguesoft.socialmedia.auth.domain.entity.KeyPair;
 import com.roguesoft.socialmedia.auth.infrastructure.model.KeyPairModel;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
+@Primary
 public class KeyPairMapper extends DataMapper<KeyPair, KeyPairModel> {
 
     public KeyPairMapper(final ModelMapper mapper) {
