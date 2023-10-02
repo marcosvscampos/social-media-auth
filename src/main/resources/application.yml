@@ -4,7 +4,7 @@ spring:
     name: social-media-auth
   data:
     mongodb:
-      uri: mongodb+srv://markfieldsuk:z4iFMp8cPFXw5hvC@cluster0.rsy1hrv.mongodb.net/social-media-demo
+      uri: db_connection_url
 
 server:
   port: 8090
