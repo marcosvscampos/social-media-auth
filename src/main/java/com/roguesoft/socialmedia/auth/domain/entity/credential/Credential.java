@@ -15,8 +15,6 @@ public abstract class Credential {
 
     private String userId;
 
-    private String username;
-
     private CredentialType credentialType;
 
     public String getId(){
@@ -37,7 +35,7 @@ public abstract class Credential {
     public abstract void setType();
 
     private void generateId(final HashCreator hashCreator){
-        this.id = hashCreator.create(this.username + ":" + this.credentialType.name());
+        this.id = hashCreator.create(this.userId + ":" + this.credentialType.name());
     }
 
 }

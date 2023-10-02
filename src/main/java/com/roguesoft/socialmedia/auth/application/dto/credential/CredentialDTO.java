@@ -24,8 +24,6 @@ public class CredentialDTO implements Serializable {
     @JsonProperty("user_id")
     private String userId;
 
-    private String username;
-
     @JsonProperty("secret_value")
     private String secretValue;
 
