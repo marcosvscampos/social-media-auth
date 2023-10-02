@@ -7,10 +7,13 @@ public enum CredentialType {
 
     PASSWORD(new PasswordCredential()), PIN(new PinCredential());
 
-    private final Credential credential;
+    private Credential credential;
 
     CredentialType(final Credential credential) {
         this.credential = credential;
     }
 
+    public void setCredential(final Credential credential){
+        this.credential = credential;
+    }
 }

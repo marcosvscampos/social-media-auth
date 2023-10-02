@@ -17,7 +17,7 @@ public class PinCredential extends Credential {
 
     @Override
     public void setSecretValue(final KeyPair keyPair, String value) {
-        this.pinNumber = value;
+        this.pinNumber = keyPair.encrypt("RSA", value);
     }
 
     @Override

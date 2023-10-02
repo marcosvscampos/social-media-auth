@@ -18,7 +18,6 @@ public class CredentialDomainMapper extends DomainMapper<CredentialDTO, Credenti
         Credential credential = request.getType().getCredential();
         credential.setUsername(request.getUsername());
         credential.setUserId(request.getUserId());
-        credential.setType();
         credential.setId();
         return credential;
     }
