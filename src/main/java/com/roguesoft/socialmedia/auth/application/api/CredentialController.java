@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users/credentials")
+@RequestMapping("/credentials")
 @RequiredArgsConstructor
 public class CredentialController {
 

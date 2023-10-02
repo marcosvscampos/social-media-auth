@@ -8,6 +8,8 @@ public interface KeyPairRepository {
 
     KeyPairModel save(final KeyPairModel model);
 
+    Optional<KeyPairModel> findById(final String id);
+
     Optional<KeyPairModel> findByUserId(final String userId);
 
 }

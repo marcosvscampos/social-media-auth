@@ -5,6 +5,7 @@ import com.roguesoft.socialmedia.auth.infrastructure.crypto.HashCreator;
 import com.roguesoft.socialmedia.auth.infrastructure.crypto.MD5HashCreator;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
@@ -23,6 +24,10 @@ public abstract class Credential {
             this.generateId(new MD5HashCreator());
         }
         return this.id;
+    }
+
+    public void setId(){
+        this.generateId(new MD5HashCreator());
     }
 
     public abstract void setSecretValue(final KeyPair keyPair, final String value);

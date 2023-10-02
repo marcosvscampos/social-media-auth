@@ -19,7 +19,7 @@ public class CredentialDomainMapper extends DomainMapper<CredentialDTO, Credenti
         credential.setUsername(request.getUsername());
         credential.setUserId(request.getUserId());
         credential.setType();
-        credential.getId();
+        credential.setId();
         return credential;
     }
 
@@ -31,7 +31,7 @@ public class CredentialDomainMapper extends DomainMapper<CredentialDTO, Credenti
     @Override
     public ResponseDTO toResponseURI(String contextPath, String id) {
         return ResponseDTO.builder()
-                  .uri(contextPath + "/users/credentials/" + id)
+                  .uri(contextPath + "/credentials/" + id)
                   .build();
     }
 }

@@ -18,7 +18,6 @@ public class PasswordCredential extends Credential {
     @Override
     public void setSecretValue(final KeyPair keyPair, final String value) {
         this.password = value;
-        //this.password = keyPair.encrypt("RSA", value);
     }
 
     @Override
