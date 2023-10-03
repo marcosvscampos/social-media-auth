@@ -18,9 +18,7 @@ public class CredentialModel {
     private String id;
 
     private String userId;
-
-    private String username;
-
+    
     private String type;
 
     private String value;

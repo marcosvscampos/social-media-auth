@@ -23,7 +23,8 @@ public class KeyPairController {
 
     private final CreateRegistryUseCase<KeyPairDTO, ResponseDTO> createUserKeyPairUseCase;
 
-    private final GetRegistryUseCase<String, KeyPairDTO> getUserKeyPairUseCase;
+    @Qualifier("getKeyPairByIdUseCase")
+    private final GetRegistryUseCase<String, KeyPairDTO> getKeyPairUseCase;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> createKeyPair(@RequestBody final KeyPairDTO request){
@@ -33,7 +34,7 @@ public class KeyPairController {
 
     @GetMapping(value = "/{keyId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<KeyPairDTO> getPublicKey(@PathVariable(name = "keyId") final String keyId){
-        return ResponseEntity.ok(getUserKeyPairUseCase.execute(keyId));
+        return ResponseEntity.ok(getKeyPairUseCase.execute(keyId));
     }
 
 }

@@ -2,7 +2,6 @@ package com.roguesoft.socialmedia.auth.infrastructure.mapper;
 
 import com.roguesoft.socialmedia.auth.domain.entity.KeyPair;
 import com.roguesoft.socialmedia.auth.infrastructure.mapper.formatter.KeyParser;
-import com.roguesoft.socialmedia.auth.infrastructure.mapper.formatter.PublicKeyParser;
 import com.roguesoft.socialmedia.auth.infrastructure.model.KeyPairModel;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -19,11 +18,16 @@ import java.util.Objects;
 @Primary
 public class KeyPairMapper extends DataMapper<KeyPair, KeyPairModel> {
 
-    private final KeyParser parser;
+    private final KeyParser publicKeyParser;
 
-    public KeyPairMapper(final ModelMapper mapper) {
+    private final KeyParser privateKeyParser;
+
+    public KeyPairMapper(final ModelMapper mapper,
+                         final KeyParser publicKeyParser,
+                         final KeyParser privateKeyParser) {
         super(mapper);
-        parser = new PublicKeyParser();
+        this.publicKeyParser = publicKeyParser;
+        this.privateKeyParser = privateKeyParser;
 
         Converter<PublicKey, String> convertPublicKeyToBase64Str = ctx -> Objects.nonNull(ctx.getSource()) ?
                 Base64.getEncoder().encodeToString(ctx.getSource().getEncoded()) : null;
@@ -37,12 +41,22 @@ public class KeyPairMapper extends DataMapper<KeyPair, KeyPairModel> {
         Converter<String, PublicKey> convertStrToPublicKey = ctx -> {
             String value = ctx.getSource();
             if(Objects.nonNull(value)) {
-               return (PublicKey) parser.parse(value);
+               return (PublicKey) this.publicKeyParser.parse(value);
             }
             return null;
         };
+
+        Converter<String, PrivateKey> convertStrToPrivateKey = ctx -> {
+            String value = ctx.getSource();
+            if(Objects.nonNull(value)) {
+                return (PrivateKey) this.privateKeyParser.parse(value);
+            }
+            return null;
+        };
+
         TypeMap<KeyPairModel, KeyPair> typeMapToEntity = super.getMapper().createTypeMap(KeyPairModel.class, KeyPair.class);
         typeMapToEntity.addMappings(mappings -> mappings.using(convertStrToPublicKey).map(KeyPairModel::getPublicKey, KeyPair::setPublicKey));
+        typeMapToEntity.addMappings(mappings -> mappings.using(convertStrToPrivateKey).map(KeyPairModel::getPrivateKey, KeyPair::setPrivateKey));
 
     }
 

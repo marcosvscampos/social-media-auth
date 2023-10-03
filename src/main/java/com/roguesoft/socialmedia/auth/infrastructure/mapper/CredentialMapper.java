@@ -2,6 +2,7 @@ package com.roguesoft.socialmedia.auth.infrastructure.mapper;
 
 import com.roguesoft.socialmedia.auth.domain.entity.credential.Credential;
 import com.roguesoft.socialmedia.auth.domain.entity.credential.CredentialType;
+import com.roguesoft.socialmedia.auth.domain.entity.credential.PasswordCredential;
 import com.roguesoft.socialmedia.auth.infrastructure.model.CredentialModel;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -18,11 +19,14 @@ public class CredentialMapper extends DataMapper<Credential, CredentialModel> {
         Converter<CredentialType, String> credentialTypeConverter = ctx -> Objects.nonNull(ctx.getSource()) ?
                 ctx.getSource().name() : null;
 
-        TypeMap<Credential, CredentialModel> typeMapToModel = mapper.createTypeMap(Credential.class, CredentialModel.class);
+        TypeMap<Credential, CredentialModel> typeMapToModel = super.getMapper().createTypeMap(Credential.class, CredentialModel.class);
         typeMapToModel.addMapping(Credential::getSecretValue, CredentialModel::setValue);
 
         typeMapToModel.addMappings(mappings -> mappings.using(credentialTypeConverter)
                 .map(Credential::getCredentialType, CredentialModel::setType));
+
+        TypeMap<CredentialModel, PasswordCredential> typeMapToEntityPassword = super.getMapper().createTypeMap(CredentialModel.class, PasswordCredential.class);
+        typeMapToEntityPassword.addMapping(CredentialModel::getValue, PasswordCredential::setPassword);
     }
 
     @Override
@@ -32,7 +36,8 @@ public class CredentialMapper extends DataMapper<Credential, CredentialModel> {
 
     @Override
     public Credential toEntity(final CredentialModel model){
-        return super.getMapper().map(model, Credential.class);
+        Credential credential = CredentialType.valueOf(model.getType()).getCredential();
+        return super.getMapper().map(model, credential.getClass());
     }
 
 }

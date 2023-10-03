@@ -19,4 +19,9 @@ public class UserHttpClientAdapter implements HttpClientPort<User> {
     public User getById(String id) {
         return userClientMapper.toEntity(userClient.getUserById(id));
     }
+
+    @Override
+    public User getByUsername(String username) {
+        return userClientMapper.toEntity(userClient.getUserByUsername(username));
+    }
 }

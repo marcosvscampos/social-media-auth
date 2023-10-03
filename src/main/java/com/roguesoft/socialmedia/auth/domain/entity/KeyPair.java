@@ -58,7 +58,7 @@ public class KeyPair {
     public String encrypt(final String algorithm, final String value) {
         try {
             Cipher cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);
 
             byte[] plainTextBytes = value.getBytes();
 
@@ -67,6 +67,20 @@ public class KeyPair {
             return Base64.getEncoder().encodeToString(encryptedBytes);
         } catch (Exception e) {
             throw new RuntimeException("Error during value encryption: ", e);
+        }
+    }
+
+    public String decrypt(final String algorithm, String encryptedValue) {
+        try {
+            Cipher cipher = Cipher.getInstance(algorithm);
+            cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
+
+            byte[] encryptedBytes = Base64.getDecoder().decode(encryptedValue);
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
+            return new String(decryptedBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error during value decryption: ", e);
         }
     }
 
